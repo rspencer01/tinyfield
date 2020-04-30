@@ -109,9 +109,7 @@ pub struct PrimeFieldElt<F : PrimeField> {
 
 impl<F: PrimeField> fmt::Debug for PrimeFieldElt<F> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.debug_tuple(&format!("F{}", F::CHARACTERISTIC))
-            .field(&self.val)
-            .finish()
+        f.write_fmt(format_args!("F{}({})", F::CHARACTERISTIC, self.val))
     }
 }
 
