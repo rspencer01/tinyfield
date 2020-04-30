@@ -1,4 +1,5 @@
 use core::cmp;
+use core::fmt;
 use core::ops;
 use core::marker;
 
@@ -100,10 +101,18 @@ impl PrimeField for GF5 {
     ];
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy)]
 pub struct PrimeFieldElt<F : PrimeField> {
     val: u8,
     phantom: marker::PhantomData<F>,
+}
+
+impl<F: PrimeField> fmt::Debug for PrimeFieldElt<F> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_tuple(&format!("F{}", F::CHARACTERISTIC))
+            .field(&self.val)
+            .finish()
+    }
 }
 
 impl<F: PrimeField> ops::Add for PrimeFieldElt<F> {
