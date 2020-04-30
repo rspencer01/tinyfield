@@ -1,6 +1,8 @@
-use std::cmp;
-use std::ops;
-use std::marker::PhantomData;
+#![no_std]
+
+use core::cmp;
+use core::ops;
+use core::marker;
 
 #[derive(Clone, Copy, Debug)]
 pub struct GF2 {}
@@ -9,7 +11,7 @@ pub struct GF3 {}
 #[derive(Clone, Copy, Debug)]
 pub struct GF5 {}
 
-trait PrimeField: std::marker::Sized + std::fmt::Debug + std::marker::Copy {
+trait PrimeField: marker::Sized + core::fmt::Debug + marker::Copy {
     const P: u8;
 
     const DIVISION_TABLE: [u8; 256];
@@ -17,18 +19,18 @@ trait PrimeField: std::marker::Sized + std::fmt::Debug + std::marker::Copy {
     fn zero() -> PrimeFieldElt<Self> {
         PrimeFieldElt {
             val : 0,
-            phantom : PhantomData,
+            phantom : marker::PhantomData,
         }
     }
 
     fn one() -> PrimeFieldElt<Self> {
         PrimeFieldElt {
             val : 1,
-            phantom : PhantomData,
+            phantom : marker::PhantomData,
         }
     }
 
-    fn elts() -> std::iter::Scan<std::ops::Range<u8>,
+    fn elts() -> core::iter::Scan<ops::Range<u8>,
                                  PrimeFieldElt<Self>,
                                  fn(&mut PrimeFieldElt<Self>, u8) -> Option<PrimeFieldElt<Self>>
                             > {
@@ -105,7 +107,7 @@ impl PrimeField for GF5 {
 #[derive(Clone, Copy, Debug)]
 struct PrimeFieldElt<F : PrimeField> {
     val: u8,
-    phantom: PhantomData<F>,
+    phantom: marker::PhantomData<F>,
 }
 
 impl<F: PrimeField> ops::Add for PrimeFieldElt<F> {
@@ -114,7 +116,7 @@ impl<F: PrimeField> ops::Add for PrimeFieldElt<F> {
     fn add(self, rhs: PrimeFieldElt<F>) -> PrimeFieldElt<F> {
         PrimeFieldElt {
             val : (((self.val as u16) + (rhs.val as u16) ) % (F::P as u16)) as u8,
-            phantom: PhantomData,
+            phantom: marker::PhantomData,
         }
     }
 }
@@ -125,7 +127,7 @@ impl<F: PrimeField> ops::Neg for PrimeFieldElt<F> {
     fn neg(self) -> PrimeFieldElt<F> {
         PrimeFieldElt {
             val : (F::P - self.val) % F::P,
-            phantom: PhantomData,
+            phantom: marker::PhantomData,
         }
     }
 }
@@ -144,7 +146,7 @@ impl<F: PrimeField> ops::Mul for PrimeFieldElt<F> {
     fn mul(self, rhs: PrimeFieldElt<F>) -> PrimeFieldElt<F> {
         PrimeFieldElt {
             val : (((self.val as u16) * (rhs.val as u16) ) % (F::P as u16)) as u8,
-            phantom: PhantomData,
+            phantom: marker::PhantomData,
         }
     }
 }
@@ -156,7 +158,7 @@ impl<F: PrimeField> ops::Div for PrimeFieldElt<F> {
         assert_ne!(rhs, F::zero(), "Division by zero");
         self * PrimeFieldElt {
             val : F::DIVISION_TABLE[rhs.val as usize],
-            phantom: PhantomData,
+            phantom: marker::PhantomData,
         }
     }
 }
