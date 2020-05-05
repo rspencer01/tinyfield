@@ -176,6 +176,18 @@ impl<F: PrimePowerField> ops::Div for PrimePowerFieldElt<F> {
     }
 }
 
+impl<F: PrimePowerField> PrimePowerFieldElt<F> {
+    pub fn pow(self, rhs: u8) -> PrimePowerFieldElt<F> {
+        // let rhs = rhs % (F::FieldOfIntegers::CHARACTERISTIC.pow(F::DEGREE as u32 - 1) - 1);
+        if rhs == 0 {
+            F::one
+        } else {
+            self * self.pow(rhs - 1)
+        }
+    }
+}
+
+
 impl<F: PrimePowerField> cmp::PartialEq for PrimePowerFieldElt<F> {
     fn eq(&self, other: &Self) -> bool {
         self.val == other.val
