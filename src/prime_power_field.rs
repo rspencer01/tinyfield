@@ -31,7 +31,7 @@ impl PrimePowerField for GF9 {
     const DEGREE : usize = 3;
 }
 
-struct PrimePowerFieldElementGenerator<F : PrimePowerField> {
+pub struct PrimePowerFieldElementGenerator<F : PrimePowerField> {
     next : [PrimeFieldElt<F::FieldOfIntegers> ; 4],
     start: bool
 }
@@ -58,7 +58,7 @@ impl<F : PrimePowerField> Iterator for PrimePowerFieldElementGenerator<F> {
     }
 }
 
-trait PrimePowerField : marker::Sized + core::fmt::Debug + marker::Copy {
+pub trait PrimePowerField : marker::Sized + core::fmt::Debug + marker::Copy {
     type FieldOfIntegers : PrimeField;
     const IRRED_POLY : [PrimeFieldElt<Self::FieldOfIntegers>; 4];
     const DEGREE : usize;
@@ -87,8 +87,8 @@ trait PrimePowerField : marker::Sized + core::fmt::Debug + marker::Copy {
 }
 
 
-#[derive(Clone, Copy, Debug)]
-struct PrimePowerFieldElt<F : PrimePowerField> {
+#[derive(Clone, Copy)]
+pub struct PrimePowerFieldElt<F : PrimePowerField> {
     val: [PrimeFieldElt<F::FieldOfIntegers>; 4],
     phantom: marker::PhantomData<F>,
 }
