@@ -2,6 +2,7 @@ use core::cmp;
 use core::fmt;
 use core::ops;
 use core::marker;
+use core::convert;
 
 #[derive(Clone, Copy, Debug)]
 pub struct GF2 {}
@@ -173,6 +174,15 @@ impl<F: PrimeField> cmp::PartialEq for PrimeFieldElt<F> {
 }
 
 impl<F: PrimeField> cmp::Eq for PrimeFieldElt<F> {}
+
+impl<F: PrimeField> convert::From<u8> for PrimeFieldElt<F> {
+    fn from(x : u8) -> PrimeFieldElt<F> {
+        PrimeFieldElt {
+            val : x % F::CHARACTERISTIC,
+            phantom: marker::PhantomData
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {
