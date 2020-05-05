@@ -94,6 +94,16 @@ pub struct PrimePowerFieldElt<F : PrimePowerField> {
     phantom: marker::PhantomData<F>,
 }
 
+impl<F: PrimePowerField> From<u8> for PrimePowerFieldElt<F> {
+    fn from(x : u8) -> PrimePowerFieldElt<F> {
+        PrimePowerFieldElt {
+            val : [ PrimeFieldElt::from(x)
+            , F::FieldOfIntegers::zero, F::FieldOfIntegers::zero, F::FieldOfIntegers::zero],
+            phantom: marker::PhantomData
+        }
+    }
+}
+
 impl<F: PrimePowerField> ops::Add for PrimePowerFieldElt<F> {
     type Output = PrimePowerFieldElt<F>;
 
