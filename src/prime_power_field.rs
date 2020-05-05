@@ -172,7 +172,7 @@ impl<F: PrimePowerField> ops::Div for PrimePowerFieldElt<F> {
     fn div(self, rhs: PrimePowerFieldElt<F>) -> PrimePowerFieldElt<F> {
         assert_ne!(rhs, F::zero, "Division by zero");
         // TODO(robert) write this properly
-        rhs * F::elts().filter(|x| *x * self == F::one).nth(0).unwrap()
+        self * F::elts().filter(|x| *x * rhs == F::one).next().expect("Could not find inverse")
     }
 }
 
