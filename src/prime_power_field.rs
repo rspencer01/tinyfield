@@ -2,6 +2,7 @@ use core::ops;
 use core::cmp;
 use core::marker;
 use core::convert::TryInto;
+use core::fmt;
 use crate::prime_field::{GF2, GF3, PrimeField, PrimeFieldElt};
 
 
@@ -172,6 +173,12 @@ impl<F: PrimePowerField> cmp::PartialEq for PrimePowerFieldElt<F> {
 }
 
 impl<F: PrimePowerField> cmp::Eq for PrimePowerFieldElt<F> {}
+
+impl<F: PrimePowerField> fmt::Debug for PrimePowerFieldElt<F> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_fmt(format_args!("({:?},{:?},{:?},{:?})", self.val[0], self.val[1], self.val[2], self.val[3]))
+    }
+}
 
 #[cfg(test)]
 mod tests {
