@@ -125,6 +125,18 @@ impl<F: PrimeField> ops::Div for PrimeFieldElt<F> {
     }
 }
 
+impl<F: PrimeField> PrimeFieldElt<F> {
+    pub fn pow(self, rhs: u8) -> PrimeFieldElt<F> {
+        let rhs = rhs % (F::CHARACTERISTIC - 1);
+        if rhs == 0 {
+            F::one
+        } else {
+            self * self.pow(rhs - 1)
+        }
+    }
+}
+
+
 impl<F: PrimeField> cmp::PartialEq for PrimeFieldElt<F> {
     fn eq(&self, other: &Self) -> bool {
         self.val == other.val
