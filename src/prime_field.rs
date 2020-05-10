@@ -125,6 +125,7 @@ impl<F: PrimeField> ops::Div for PrimeFieldElt<F> {
     }
 }
 
+
 impl<F: PrimeField> PrimeFieldElt<F> {
     pub fn pow(self, rhs: u8) -> PrimeFieldElt<F> {
         let rhs = rhs % (F::CHARACTERISTIC - 1);
@@ -156,7 +157,7 @@ impl<F: PrimeField> convert::From<u8> for PrimeFieldElt<F> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{GF2, GF3};
+    use crate::{GF2, GF3, GF97};
     use crate::prime_field::*;
 
     #[test]
@@ -197,6 +198,26 @@ mod tests {
         for x in GF3::elts() {
             if x != GF3::zero {
                 assert_eq!(x / x, GF3::one);
+            }
+        }
+    }
+
+    #[test]
+    fn gf97() {
+        let zero = GF3::zero;
+        let one = GF3::one;
+        assert_eq!(zero + zero, zero);
+        assert_eq!(zero + one, one);
+        assert_ne!(zero - one, one);
+        assert_ne!(one + one, zero);
+        assert_eq!(one - one, zero);
+        assert_eq!(one * one, one);
+        assert_eq!(zero * one, zero);
+        assert_eq!(one / one, one);
+        assert_eq!(zero / one, zero);
+        for x in GF97::elts() {
+            if x != GF97::zero {
+                assert_eq!(x / x, GF97::one);
             }
         }
     }
