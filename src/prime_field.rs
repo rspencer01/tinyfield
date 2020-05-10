@@ -4,23 +4,46 @@ use core::ops;
 use core::marker;
 use core::convert;
 
+/// A representation of a field with prime order.
+///
+/// This trait is implemented by any structure purporting to be a prime
+/// field.  Said structures, such as `GF2` or `GF3` are exposed in the `field`
+/// module and applications should not implement their own.
 pub trait PrimeField: marker::Sized + core::fmt::Debug + marker::Copy {
+    /// The characteristic of this field, a prime.
+    ///
+    /// The characteristic of an _element_ of a ring is the fewest times it
+    /// must be added to itself in order to reach zero.  In a field, this
+    /// number is the same for each element of the structure.  Further it is a
+    /// prime number.  Thus one may talk of the characteristic of a field.
+    ///
+    /// This is the only information required to uniquely determine this field.
+    /// It is also the size of this field.
     const CHARACTERISTIC : u8;
 
+    /// A map of multiplicative inverses for this field.
+    ///
+    // TODO(robert) Evaluate replacing this with Euclid's algorithm for speed.
     const DIVISION_TABLE: [u8; 256];
 
+    /// The zero element of the field.
     const zero : PrimeFieldElt<Self> =
         PrimeFieldElt {
             val : 0,
             phantom : marker::PhantomData,
         };
 
+    /// The multiplicative unit of the field.
     const one : PrimeFieldElt<Self> =
         PrimeFieldElt {
             val : 1,
             phantom : marker::PhantomData,
         };
 
+    /// An iterator over the p elements of this field.
+    ///
+    // TODO(robert) Construct a specific `PrimeFieldIterator` or investigate
+    //              implementing iter on GFp
     fn elts() -> core::iter::Scan<ops::Range<u8>,
                                  PrimeFieldElt<Self>,
                                  fn(&mut PrimeFieldElt<Self>, u8) -> Option<PrimeFieldElt<Self>>
@@ -30,6 +53,13 @@ pub trait PrimeField: marker::Sized + core::fmt::Debug + marker::Copy {
 }
 
 
+/// An element of a prime field.
+///
+/// Prime field elements should never be instanciated by external code but
+/// instead either created by iterating over a field or using the built-in
+/// constants `PrimeField::zero` and `PrimeField::one`.
+///
+/// Represented internally as a single byte.
 #[derive(Clone, Copy)]
 pub struct PrimeFieldElt<F : PrimeField> {
     val: u8,
