@@ -3,4 +3,6 @@
 
 pub mod prime_field;
 pub mod prime_power_field;
+pub mod fields;
 
+pub use fields::*;

@@ -3,34 +3,8 @@ use core::cmp;
 use core::marker;
 use core::convert::TryInto;
 use core::fmt;
-use crate::prime_field::{GF2, GF3, PrimeField, PrimeFieldElt};
+use crate::prime_field::{PrimeField, PrimeFieldElt};
 
-
-#[derive(Clone, Copy, Debug)]
-pub struct GF4 {}
-
-impl PrimePowerField for GF4 {
-    type FieldOfIntegers = GF2;
-    const IRRED_POLY : [PrimeFieldElt<Self::FieldOfIntegers>; 4] =
-        [GF2::one,
-         GF2::one,
-         GF2::one,
-         GF2::zero];
-    const DEGREE : usize = 3;
-}
-
-#[derive(Clone, Copy, Debug)]
-pub struct GF9 {}
-
-impl PrimePowerField for GF9 {
-    type FieldOfIntegers = GF3;
-    const IRRED_POLY : [PrimeFieldElt<Self::FieldOfIntegers>; 4] =
-        [GF3::one,
-         GF3::zero,
-         GF3::one,
-         GF3::zero];
-    const DEGREE : usize = 3;
-}
 
 pub struct PrimePowerFieldElementGenerator<F : PrimePowerField> {
     next : [PrimeFieldElt<F::FieldOfIntegers> ; 4],
