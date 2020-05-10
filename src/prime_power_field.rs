@@ -179,6 +179,7 @@ impl<F: PrimePowerField> fmt::Debug for PrimePowerFieldElt<F> {
 #[cfg(test)]
 mod tests {
     use crate::prime_power_field::*;
+    use crate::{GF4, GF9};
 
     #[test]
     fn gf4() {

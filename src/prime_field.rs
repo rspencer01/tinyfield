@@ -156,6 +156,7 @@ impl<F: PrimeField> convert::From<u8> for PrimeFieldElt<F> {
 
 #[cfg(test)]
 mod tests {
+    use crate::{GF2, GF3};
     use crate::prime_field::*;
 
     #[test]
