@@ -8,8 +8,9 @@ At time of writing, the top few results for "rust finite fields" in a google
 search shows:
 
  * A crate that no longer compiles, and doesn't implement finite fields
- * correctly at all A crate that only implements fields of characteristic two A
- * crate that does general finite fields, but doesn't expose arithmetic past
+   correctly at all 
+ * A crate that only implements fields of characteristic two
+ * A crate that does general finite fields, but doesn't expose arithmetic past
    addition for higher degree finite fields.
 
 This crate attempts to supply:
