@@ -10,6 +10,7 @@ homepage = "https://github.com/rspencer01/tinyfield"
 description = "Small, finite fields."
 categories = ["mathematics", "no-std", "science"]
 keywords = ["field"]
+documentation = "https://docs.rs/crate/tinyfield/"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
