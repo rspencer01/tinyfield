@@ -151,7 +151,7 @@ impl<F: PrimePowerField> ops::Div for PrimePowerFieldElt<F> {
 }
 
 impl<F: PrimePowerField> PrimePowerFieldElt<F> {
-    pub fn pow(self, rhs: u8) -> PrimePowerFieldElt<F> {
+    pub fn pow(self, rhs: u32) -> PrimePowerFieldElt<F> {
         // let rhs = rhs % (F::FieldOfIntegers::CHARACTERISTIC.pow(F::DEGREE as u32 - 1) - 1);
         if rhs == 0 {
             F::one
@@ -197,6 +197,16 @@ mod tests {
                 assert_eq!(x / x, GF4::one);
             }
         }
+        fn trace(x: PrimePowerFieldElt<GF4>) -> PrimePowerFieldElt<GF4> {
+            (1..3).fold(GF4::zero, |acc, i| acc + x.pow(u32::pow(2,i)))
+        }
+        for x in GF4::elts() {
+            assert_eq!(x, x.pow(4));
+            assert!(
+                (0..2)
+                .any(|i| PrimePowerFieldElt::from(i) == trace(x)),
+            );
+        }
     }
 
     #[test]
@@ -214,6 +224,16 @@ mod tests {
             if x != GF9::zero {
                 assert_eq!(x / x, GF9::one);
             }
+        }
+        fn trace(x: PrimePowerFieldElt<GF9>) -> PrimePowerFieldElt<GF9> {
+            (1..3).fold(GF9::zero, |acc, i| acc + x.pow(u32::pow(3,i)))
+        }
+        for x in GF9::elts() {
+            assert_eq!(x, x.pow(9));
+            assert!(
+                (0..3)
+                .any(|i| PrimePowerFieldElt::from(i) == trace(x)),
+            );
         }
     }
 }
