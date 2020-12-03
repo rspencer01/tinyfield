@@ -1,6 +1,8 @@
 Finite Fields In `no_std` Rust
 ==============================
 
+[![Build Status](https://travis-ci.org/rspencer01/tinyfield.svg?branch=master)](https://travis-ci.org/rspencer01/tinyfield)
+
 This crate exposes a number of small finite field types.  It does not depend on
 the standard library.
 
