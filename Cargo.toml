@@ -3,6 +3,13 @@ name = "tinyfield"
 version = "0.1.0"
 authors = ["Robert Spencer <general@robertandrewspencer.com>"]
 edition = "2018"
+licence-file = "LICENCE.txt"
+readme = "README.md"
+repository = "https://github.com/rspencer01/tinyfield"
+homepage = "https://github.com/rspencer01/tinyfield"
+description = "Small, finite fields."
+categories = ["mathematics", "no-std", "science"]
+keywords = ["field"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
