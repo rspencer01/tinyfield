@@ -47,7 +47,7 @@ Example usage
 type F = tinyfield::fields::GF9;
 
 let delta = F::elts()
-              .filter(|x| *x * *x - PrimePowerFieldElt::from(2) == F::zero)
+              .filter(|x| x * x - PrimePowerFieldElt::from(2) == F::zero)
               .next()
               .expect("GF9 should contain a square root of two");
 ```

@@ -118,6 +118,14 @@ impl<F: PrimePowerField> ops::Mul for PrimePowerFieldElt<F> {
     type Output = PrimePowerFieldElt<F>;
 
     fn mul(self, rhs: PrimePowerFieldElt<F>) -> PrimePowerFieldElt<F> {
+        &self * &rhs
+    }
+}
+
+impl<F: PrimePowerField> ops::Mul for &PrimePowerFieldElt<F> {
+    type Output = PrimePowerFieldElt<F>;
+
+    fn mul(self, rhs: &PrimePowerFieldElt<F>) -> PrimePowerFieldElt<F> {
         let mut prod_poly = [F::FieldOfIntegers::zero; 8];
         for i in 0..4 {
             for j in 0..4 {

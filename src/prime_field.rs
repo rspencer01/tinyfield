@@ -106,6 +106,14 @@ impl<F: PrimeField> ops::Mul for PrimeFieldElt<F> {
     type Output = PrimeFieldElt<F>;
 
     fn mul(self, rhs: PrimeFieldElt<F>) -> PrimeFieldElt<F> {
+        &self * &rhs
+    }
+}
+
+impl<F: PrimeField> ops::Mul for &PrimeFieldElt<F> {
+    type Output = PrimeFieldElt<F>;
+
+    fn mul(self, rhs: &PrimeFieldElt<F>) -> PrimeFieldElt<F> {
         PrimeFieldElt {
             val : (((self.val as u16) * (rhs.val as u16) ) % (F::CHARACTERISTIC as u16)) as u8,
             phantom: marker::PhantomData,
@@ -152,5 +160,11 @@ impl<F: PrimeField> convert::From<u8> for PrimeFieldElt<F> {
             val : x % F::CHARACTERISTIC,
             phantom: marker::PhantomData
         }
+    }
+}
+
+impl<F: PrimeField> convert::From<PrimeFieldElt<F>> for u8 {
+    fn from(x : PrimeFieldElt<F>) -> u8 {
+        x.val
     }
 }
