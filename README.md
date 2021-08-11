@@ -43,7 +43,8 @@ Issues on the github tracker are also welcome.
 Example usage
 -------------
 ```rust
-type F = tinyfield::prime_power_field::GF9;
+# use tinyfield::prime_power_field::*;
+type F = tinyfield::fields::GF9;
 
 let delta = F::elts()
               .filter(|x| *x * *x - PrimePowerFieldElt::from(2) == F::zero)
